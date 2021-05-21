@@ -4,11 +4,11 @@ var jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 
-router.post('/signup', (req, res) => {
+router.post('/signup', (req, res) => {    
     User.create({
         full_name: req.body.user.full_name,
         username: req.body.user.username,
-        passwordhash: bcrypt.hashSync(req.body.user.password, 10),
+        passwordHash: bcrypt.hashSync(req.body.user.password, 10),
         email: req.body.user.email,
     })
         .then(
@@ -26,7 +26,7 @@ router.post('/signup', (req, res) => {
         )
 })
 
-router.post('/signin', (req, res) => {
+router.post('/signin', (req, res) => {    
     User.findOne({ where: { username: req.body.user.username } }).then(user => {
         if (user) {
             bcrypt.compare(req.body.user.password, user.passwordHash, function (err, matches) {
